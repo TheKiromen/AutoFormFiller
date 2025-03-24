@@ -8,7 +8,7 @@ AutoFormFiller is a browser extension designed to scrape input forms from the cu
 2. Open Firefox and navigate to `about:debugging`.
 3. Click on "This Firefox" in the sidebar.
 4. Click on "Load Temporary Add-on".
-5. Select the `manifest.json` file from the `src` directory.
+5. Select the `manifest.json` file from the main directory.
 
 ## Usage
 
