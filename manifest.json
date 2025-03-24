@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "AutoFormFiller",
+  "version": "1.0",
+  "description": "AutoFormFiller is a browser extension designed to scrape input forms from the currently active browser tab and assist with filling them out automatically.",
+  "permissions": [
+ 
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["main.js"]
+    }
+  ],
+  "icons": {
+    "48": "icons/icon48.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "TODO@example.com"
+    }
+  }
+}
