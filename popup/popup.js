@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
 function test() {
-  var inputs = document.getElementsByTagName('input');
-  var textAreas = document.getElementsByTagName('textarea');
-  console.log(inputs);
-  console.log(textAreas);
+  // Get currently open tab
+  browser.tabs.query({active: true, currentWindow: true}, (tabs) => {
+    console.log(tabs[0].url);
+  });
 }
