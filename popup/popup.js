@@ -5,5 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
 function test() {
-  console.log('Test button clicked!');
+  var inputs = document.getElementsByTagName('input');
+  var textAreas = document.getElementsByTagName('textarea');
+  console.log(inputs);
+  console.log(textAreas);
 }
