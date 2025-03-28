@@ -16,12 +16,11 @@ async function handleButtonClick() {
   // Get Id of current active tab
   const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
 
+  const rootDir = browser.runtime.getURL("");
+  console.log("Extension Root Directory:", rootDir);
+
   await browser.scripting.executeScript({
     target: { tabId: tab.id },
-    // TODO: Why is this not working?
-    // files : ["content_scripts/input_filler.js"]
-    func: () => {
-      document.body.style.border = "5px solid red";
-    }
+    files : ["../content_scripts/input_filler.js"],
   });
 }
