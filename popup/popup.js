@@ -8,10 +8,6 @@ async function handleButtonClick() {
   var textArea = document.getElementById('jsonInput');
   // Convert text to JSON
   var json = JSON.parse(textArea.value);
-  console.log(json);
-
-  // Write some test data to text area
-  textArea.value = "Hello World";
 
   // Get Id of current active tab
   const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
