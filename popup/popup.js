@@ -16,4 +16,9 @@ async function handleButtonClick() {
     target: { tabId: tab.id },
     files : ["../content_scripts/input_filler.js"],
   });
+
+  browser.tabs.sendMessage(tab.id, {
+    command: 'fillInputFields',
+    data: json,
+  });
 }
