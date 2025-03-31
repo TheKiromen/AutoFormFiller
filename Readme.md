@@ -13,3 +13,20 @@ AutoFormFiller is a browser extension designed to scrape input forms from the cu
 ## Usage
 
 - TODO
+
+### Sample JSON
+```json
+[
+    {
+        "id": 1,
+        "query": "Hello World!"
+    },
+    {
+        "id": 2,
+        "query": "example.com"
+    },
+    {
+        "id": 3,
+        "query": "Do a barrel roll"
+    }
+]
