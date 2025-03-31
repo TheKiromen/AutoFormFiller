@@ -13,7 +13,6 @@ async function handleButtonClick() {
     for (var i = 0; i < json.length; i++) {
       var tabData = new TabData("https://www.google.pl", json[i].query);
       tabsData.push(tabData);
-      console.log(tabData);
     }
   }
   catch (e) {
@@ -21,18 +20,21 @@ async function handleButtonClick() {
     return;
   }
 
-  // // Get Id of current active tab
-  // const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+  // TODO: Fix missing host permissions error
+  tabsData.forEach((tabData) => {
+    browser.tabs.create({ url: tabData.url }).then((tab) => {
+      console.log(`Tab created with ID: ${tab.id}`);
+      browser.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ["../content_scripts/input_filler.js"],
+      });
 
-  // await browser.scripting.executeScript({
-  //   target: { tabId: tab.id },
-  //   files : ["../content_scripts/input_filler.js"],
-  // });
-
-  // browser.tabs.sendMessage(tab.id, {
-  //   command: 'fillInputFields',
-  //   data: json,
-  // });
+      browser.tabs.sendMessage(tab.id, {
+        command: 'fillInputFields',
+        data: tabData.query,
+      });
+    });
+  });
 }
 
 class TabData {
