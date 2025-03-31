@@ -1,6 +1,8 @@
 browser.runtime.onMessage.addListener((message) => {
     if (message.command === 'fillInputFields') {
         var inputs = scrapeInputFields();
+        inputs.searchBar.value = message.data;
+        inputs.submitButton.click()
     }
 });
 
