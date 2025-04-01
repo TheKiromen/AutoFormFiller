@@ -22,17 +22,17 @@ async function handleButtonClick() {
 
   // TODO: Fix missing host permissions error
   tabsData.forEach((tabData) => {
-    browser.tabs.create({ url: tabData.url }).then((tab) => {
+    browser.tabs.create({ url: tabData.url, active: false }).then((tab) => {
       console.log(`Tab created with ID: ${tab.id}`);
-      browser.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ["../content_scripts/input_filler.js"],
-      });
+      // browser.scripting.executeScript({
+      //   target: { tabId: tab.id },
+      //   files: ["../content_scripts/input_filler.js"],
+      // });
 
-      browser.tabs.sendMessage(tab.id, {
-        command: 'fillInputFields',
-        data: tabData.query,
-      });
+      // browser.tabs.sendMessage(tab.id, {
+      //   command: 'fillInputFields',
+      //   data: tabData.query,
+      // });
     });
   });
 }
