@@ -4,29 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
 async function handleButtonClick() {
-  browser.tabs.create({ url: "https://example.com", active: false }).then((tab) => {
-    // Track tab status changes
-    const listener = (tabId, changeInfo) => {
-      if (tabId === tab.id && changeInfo.status === "complete") {
-        browser.scripting.executeScript({
-          target: { tabId: tab.id },
-          files: ["../content_scripts/input_filler.js"],
-        }).then(() => {
-          browser.tabs.sendMessage(tab.id, {
-            command: 'fillInputFields',
-            data: { exampleKey: 'exampleValue' } // Replace with actual data
-          }).catch(console.error);
-        }).catch(console.error);
-        browser.tabs.onUpdated.removeListener(listener); // Remove after execution
-      }
-    };
-    browser.tabs.onUpdated.addListener(listener);
-  });
-
-  return;
-
-
-
   var tabsData = [];
   var textArea = document.getElementById('jsonInput');
 
@@ -43,32 +20,28 @@ async function handleButtonClick() {
     return;
   }
 
-  const requiredPermissions = {
-    permissions: ["scripting", "tabs"],
-    origins: ["https://example.com/*"]
-  };
-
-  var permissions = await browser.permissions.request(requiredPermissions);
-  if (!permissions) {
-    alert('Permission denied!');
-    return;
-  }
-
+  // This mess is because if we inject the script too quickly, the tab 'forgets' that it has necessary permissions to execute it and throws a tantrum
+  // So we need to wait for the tab to be fully loaded before injecting the script
   tabsData.forEach((tabData) => {
-    browser.tabs.create({ url: tabData.url, active: false }).then((tab) => {
-      browser.scripting.executeScript({
-        target: { tabId: tab.id },
-        // files: ["../content_scripts/input_filler.js"],
-        func: () => {
-          console.log('Script executed!');
-          document.body.style.backgroundColor = 'lightgreen';
-        },
-      });
-
-      // browser.tabs.sendMessage(tab.id, {
-      //   command: 'fillInputFields',
-      //   data: tabData.query,
-      // });
+    // TODO: Get the url from JSON input and check if scraping works fine
+    browser.tabs.create({ url: "https://example.com/", active: false }).then((tab) => {
+      // Track tab status changes
+      const listener = (tabId, changeInfo) => {
+        if (tabId === tab.id && changeInfo.status === "complete") {
+          // Inject the script into tab and execute the function `fillInputFields`
+          browser.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ["../content_scripts/input_filler.js"],
+          }).then(() => {
+            browser.tabs.sendMessage(tab.id, {
+              command: 'fillInputFields',
+              data: tabData.query
+            }).catch(console.error);
+          }).catch(console.error);
+          browser.tabs.onUpdated.removeListener(listener); // Remove after execution
+        }
+      };
+      browser.tabs.onUpdated.addListener(listener);
     });
   });
 }
