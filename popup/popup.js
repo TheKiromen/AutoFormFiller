@@ -11,13 +11,17 @@ async function handleButtonClick() {
         browser.scripting.executeScript({
           target: { tabId: tab.id },
           files: ["../content_scripts/input_filler.js"],
+        }).then(() => {
+          browser.tabs.sendMessage(tab.id, {
+            command: 'fillInputFields',
+            data: { exampleKey: 'exampleValue' } // Replace with actual data
+          }).catch(console.error);
         }).catch(console.error);
         browser.tabs.onUpdated.removeListener(listener); // Remove after execution
       }
     };
     browser.tabs.onUpdated.addListener(listener);
   });
-  
 
   return;
 
