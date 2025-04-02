@@ -1,3 +1,14 @@
+// TODO: Try to move it to a separate models file and import it?
+class TabData {
+  constructor(url, title) {
+    if(!url || !title) {
+      throw new Error('URL and title are required');
+    }
+    this.url = url;
+    this.title = title;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('testButton').addEventListener('click', handleButtonClick);
   });
@@ -24,6 +35,7 @@ async function handleButtonClick() {
   // So we need to wait for the tab to be fully loaded before injecting the script
   tabsData.forEach((tabData) => {
     // TODO: Get the url from JSON input and check if scraping works fine
+    // TODO: DONT FORGET TO UPDATE PERMISSIONS IN MANIFEST.JSON!!!!
     browser.tabs.create({ url: "https://example.com/", active: false }).then((tab) => {
       // Track tab status changes
       const listener = (tabId, changeInfo) => {
@@ -44,14 +56,4 @@ async function handleButtonClick() {
       browser.tabs.onUpdated.addListener(listener);
     });
   });
-}
-
-class TabData {
-  constructor(url, title) {
-    if(!url || !title) {
-      throw new Error('URL and title are required');
-    }
-    this.url = url;
-    this.title = title;
-  }
 }
