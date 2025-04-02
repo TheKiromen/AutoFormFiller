@@ -10,10 +10,7 @@ async function handleButtonClick() {
       if (tabId === tab.id && changeInfo.status === "complete") {
         browser.scripting.executeScript({
           target: { tabId: tab.id },
-          func: () => {
-            console.log("Script injected successfully!");
-            document.body.style.backgroundColor = 'red';
-          }
+          files: ["../content_scripts/input_filler.js"],
         }).catch(console.error);
         browser.tabs.onUpdated.removeListener(listener); // Remove after execution
       }
