@@ -4,26 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
 async function handleButtonClick() {
-  // TODO: Simplify this crap
-  browser.tabs.create({ url: "https://example.com" }).then((tab) => {
+  browser.tabs.create({ url: "https://example.com", active: false }).then((tab) => {
     // Track tab status changes
     const listener = (tabId, changeInfo) => {
       if (tabId === tab.id && changeInfo.status === "complete") {
-        browser.permissions.contains({
-          origins: ["https://example.com/*"]
-        }).then((hasPermission) => {
-          if (hasPermission) {
-            browser.scripting.executeScript({
-              target: { tabId: tab.id },
-              func: () => {
-                console.log("Script injected successfully!");
-                document.body.style.backgroundColor = 'red';
-              }
-            }).catch(console.error);
-          } else {
-            console.error("Permissions still missing after reload.");
+        browser.scripting.executeScript({
+          target: { tabId: tab.id },
+          func: () => {
+            console.log("Script injected successfully!");
+            document.body.style.backgroundColor = 'red';
           }
-        });
+        }).catch(console.error);
         browser.tabs.onUpdated.removeListener(listener); // Remove after execution
       }
     };
