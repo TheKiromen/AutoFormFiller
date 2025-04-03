@@ -1,9 +1,8 @@
 browser.runtime.onMessage.addListener((message) => {
     if (message.command === 'fillInputFields') {
-        document.body.style.backgroundColor = 'lightgreen';
-        // var inputs = scrapeInputFields();
-        // inputs.searchBar.value = message.data;
-        // inputs.submitButton.click()
+        var inputs = scrapeInputFields();
+        inputs.searchBar.value = message.data;
+        inputs.submitButton.click();
     }
 });
 

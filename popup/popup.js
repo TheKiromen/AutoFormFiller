@@ -45,7 +45,7 @@ async function handleButtonClick() {
           }).then(() => {
             browser.tabs.sendMessage(tab.id, {
               command: 'fillInputFields',
-              data: tabData.query
+              data: tabData.title
             }).catch(console.error);
           }).catch(console.error);
           browser.tabs.onUpdated.removeListener(listener); // Remove after execution
