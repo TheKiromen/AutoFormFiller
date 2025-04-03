@@ -22,7 +22,7 @@ async function handleButtonClick() {
     var json = JSON.parse(textArea.value);
     // Input should be an array of objects
     for (var i = 0; i < json.length; i++) {
-      var tabData = new TabData("https://example.com/", json[i].query);
+      var tabData = new TabData("https://www.google.pl/", json[i].query);
       tabsData.push(tabData);
     }
   }
@@ -34,9 +34,7 @@ async function handleButtonClick() {
   // This mess is because if we inject the script too quickly, the tab 'forgets' that it has necessary permissions to execute it and throws a tantrum
   // So we need to wait for the tab to be fully loaded before injecting the script
   tabsData.forEach((tabData) => {
-    // TODO: Get the url from JSON input and check if scraping works fine
-    // TODO: DONT FORGET TO UPDATE PERMISSIONS IN MANIFEST.JSON!!!!
-    browser.tabs.create({ url: "https://example.com/", active: false }).then((tab) => {
+    browser.tabs.create({ url: tabData.url, active: false }).then((tab) => {
       // Track tab status changes
       const listener = (tabId, changeInfo) => {
         if (tabId === tab.id && changeInfo.status === "complete") {

@@ -8,7 +8,7 @@
     "tabs"
   ],
   "host_permissions": [
-    "https://example.com/*"
+    "https://www.google.pl/*"
   ],
   "action": {
     "default_title": "AutoFormFiller",
