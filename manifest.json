@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AutoFormFiller",
+  "name": "AutoFormFillerPoC",
   "version": "1.0",
-  "description": "AutoFormFiller is a browser extension designed to scrape input forms from the currently active browser tab and assist with filling them out automatically.",
+  "description": "Barebones POC for an extension that will allow automation of form filling for various sites with user provided data.",
   "permissions": [
     "scripting",
     "tabs"
@@ -19,7 +19,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "TODO@example.com"
+      "id": "dkrucze@gmail.com"
     }
   }
 }
