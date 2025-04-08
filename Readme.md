@@ -22,7 +22,8 @@ This is just a proof of concept that can be extended to work with different site
 ## Usage
 
 - Click the extension icon
-
+- Enter your input JSON, sample input below
+- Click submit button, it should open new tab per each entry in the input and search the associated query
 
 ### Sample JSON
 ```json
